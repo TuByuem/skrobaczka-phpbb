@@ -2,6 +2,7 @@
 
 namespace TuByuem\Skrobaczka\Command;
 
+use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -13,12 +14,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Scrap extends Command
 {
-    public function __construct()
+    /**
+     * @var Client
+     */
+    private $client;
+
+    public function __construct(Client $client)
     {
-        parent::__construct();
+        $this->client = $client;
     }
 
-    public function configure() {
+    public function configure()
+    {
         $this->setName('skrobaczka:scrap');
     }
 
