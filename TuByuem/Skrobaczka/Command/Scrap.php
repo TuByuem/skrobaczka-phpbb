@@ -18,6 +18,10 @@ class Scrap extends Command
         parent::__construct();
     }
 
+    public function configure() {
+        $this->setName('skrobaczka:scrap');
+    }
+
     public function run(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('test');
