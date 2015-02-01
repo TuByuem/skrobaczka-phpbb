@@ -1,7 +1,13 @@
 parameters:
     event_dispatcher.class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
+    scrap.class: TuByuem\Skrobaczka\Command\Scrap
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
         arguments:
             - @service_container
+    scrap:
+        class: %scrap.class%
+        tags:
+            - 
+                name: console.command

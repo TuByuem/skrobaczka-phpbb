@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "3721289420c41d4019fa2f0020aace41",
+    "hash": "74b903004baa536f2b6d91f071c47552",
     "packages": [
         {
             "name": "symfony/browser-kit",
