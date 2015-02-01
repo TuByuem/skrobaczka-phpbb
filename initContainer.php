@@ -10,3 +10,4 @@ $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/config'));
 $loader->load('services.yml');
 
 $container->addCompilerPass(new AddConsoleCommandPass());
+$container->compile();
