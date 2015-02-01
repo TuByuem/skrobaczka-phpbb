@@ -1,0 +1,3 @@
+parameters:
+    login.button_text: Zaloguj
+    login.path: login.php

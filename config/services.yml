@@ -2,6 +2,7 @@ parameters:
     event_dispatcher.class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
     scrap.class: TuByuem\Skrobaczka\Command\Scrap
     client.class: Goutte\Client
+    action.login.class: TuByuem\Skrobaczka\Action\Login
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -10,9 +11,15 @@ services:
     scrap:
         class: %scrap.class%
         arguments:
-            - @client
+            - @action.login
         tags:
             -
                 name: console.command
     client:
         class: %client.class%
+    action.login:
+        class: %action.login.class%
+        arguments:
+            - @client
+            - %login.path%
+            - %login.button_text%

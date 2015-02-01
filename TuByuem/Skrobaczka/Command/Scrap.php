@@ -2,10 +2,11 @@
 
 namespace TuByuem\Skrobaczka\Command;
 
-use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use TuByuem\Skrobaczka\Action\ActionInterface;
 
 /**
  * Description of Scrap
@@ -15,24 +16,31 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Scrap extends Command
 {
     /**
-     * @var Client
+     * @var ActionInterface
      */
-    private $client;
+    private $loginAction;
 
-    public function __construct(Client $client)
+    public function __construct(ActionInterface $loginAction)
     {
-        $this->client = $client;
+        $this->loginAction = $loginAction;
         parent::__construct();
     }
 
     public function configure()
     {
-        $this->setName('skrobaczka:scrap');
+        $this->setName('skrobaczka:scrap')
+                ->addArgument('address', InputArgument::REQUIRED, 'Adres forum do pobrania')
+                ->addArgument('db', InputArgument::REQUIRED, 'Dane bazy do wypełnienia (uri PDO)')
+                ->addArgument('login', InputArgument::REQUIRED, 'Login do konta administracyjnego')
+                ->addArgument('password', InputArgument::REQUIRED, 'Hasło do konta administracyjnego');
     }
 
-    public function run(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output)
     {
-        $crawler = $this->client->request('GET', 'http://www.google.pl/');
-        var_dump($crawler->html());
+        $this->loginAction->perform([
+            'url' => $input->getArgument('address'),
+            'username' => $input->getArgument('login'),
+            'password' => $input->getArgument('password'),
+        ]);
     }
 }
