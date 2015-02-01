@@ -22,6 +22,7 @@ class Scrap extends Command
     public function __construct(Client $client)
     {
         $this->client = $client;
+        parent::__construct();
     }
 
     public function configure()
@@ -31,6 +32,7 @@ class Scrap extends Command
 
     public function run(InputInterface $input, OutputInterface $output)
     {
-        $output->writeln('test');
+        $crawler = $this->client->request('GET', 'http://www.google.pl/');
+        var_dump($crawler->html());
     }
 }
