@@ -12,5 +12,8 @@
         "symfony/browser-kit": "~2.6",
         "symfony/yaml": "~2.6",
         "symfony/config": "~2.6"
+    },
+    "autoload": {
+        "files": ["TuByuem/Skrobaczka/DependencyInjection/AddConsoleCommandPass.php"]
     }
 }
