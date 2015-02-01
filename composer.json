@@ -1,0 +1,12 @@
+{
+    "name": "tubyuem/skrobaczka-phpbb",
+    "authors": [
+        {
+            "name": "TuByuem",
+            "email": "tubyuem@wp.pl"
+        }
+    ],
+    "require": {
+
+    }
+}
