@@ -2,14 +2,16 @@
 
 namespace TuByuem\Skrobaczka\Action;
 
-use InvalidArgumentException;
 use Symfony\Component\BrowserKit\Client;
 use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\DomCrawler\Link;
+use TuByuem\Skrobaczka\Exception\ElementNotFoundException;
+use TuByuem\Skrobaczka\Exception\InvalidConfigurationException;
 
 /**
  * @author TuByuem <tubyuem@wp.pl>
  */
-class Login implements ActionInterface
+class Login extends AbstractAction
 {
     /**
      * @var Client
@@ -17,47 +19,66 @@ class Login implements ActionInterface
     private $client;
 
     /**
-     * @var string
+     * @var VisitMainpage
      */
-    private $loginPath;
+    private $visitMainpage;
 
     /**
-     * @var string
+     * @var array
      */
-    private $loginButtonText;
+    private $options;
 
     /**
-     * @param Client $client
-     * @param string $loginPath
-     * @param string $loginButtonText
+     * @param Client        $client
+     * @param VisitMainpage $visitMainpage
+     * @param array         $options
      */
-    public function __construct(Client $client, $loginPath, $loginButtonText)
+    public function __construct(Client $client, VisitMainpage $visitMainpage, array $options)
     {
-        $this->client = $client;
-        $this->loginPath = $loginPath;
-        $this->loginButtonText = $loginButtonText;
-    }
-
-    /**
-     * @param  array                    $options
-     * @throws InvalidArgumentException
-     */
-    public function perform(array $options)
-    {
-        if (!isset($options['url']) || !isset($options['username']) || !isset($options['password'])) {
-            throw new InvalidArgumentException('Required options are username and passwords.');
+        if (!isset($options['link_text']) || !isset($options['button_text'])) {
+            throw new InvalidConfigurationException(
+                'LoginAction requires \'link_text\' and \'button_text\' as options.'
+            );
         }
 
-        $crawler = $this->getLoginCrawler($options['url']);
-        $this->submitForm($crawler, $options['username'], $options['password']);
+        $this->client = $client;
+        $this->visitMainpage = $visitMainpage;
+        $this->options = $options;
+    }
+
+    public function login($username, $password)
+    {
+        $loginCrawler = $this->getLoginCrawler();
+        $this->submitForm($loginCrawler, $username, $password);
     }
 
     /**
      * @return Crawler
      */
-    private function getLoginCrawler($url)
+    private function getLoginCrawler()
     {
-        return $this->client->request('GET', sprintf('%s/%s', $url, $this->loginPath));
+        $mainpageCrawler = $this->visitMainpage->getCrawler();
+        $linkCrawler = $mainpageCrawler->selectLink($this->options['link_text']);
+        $link = $this->getLoginLink($linkCrawler);
+
+        return $this->client->click($link);
+    }
+
+    /**
+     * @param  Crawler                  $crawler
+     * @return Link
+     * @throws ElementNotFoundException
+     */
+    private function getLoginLink(Crawler $crawler)
+    {
+        $links = $crawler->links();
+        foreach ($links as $link) {
+            if ($link->getNode()->textContent === $this->options['link_text']) {
+                return $link;
+            }
+        }
+
+        throw new ElementNotFoundException('Login link could not be found.');
     }
 
     /**
@@ -65,14 +86,13 @@ class Login implements ActionInterface
      */
     private function submitForm(Crawler $crawler, $username, $password)
     {
-        $buttonCrawlerNode = $crawler->selectButton($this->loginButtonText);
+        $buttonCrawlerNode = $crawler->selectButton($this->options['button_text']);
         $form = $buttonCrawlerNode->form(
             [
                 'username' => $username,
                 'password' => $password,
             ]
         );
-        $resultCrawler = $this->client->submit($form);
-        echo $resultCrawler->html();
+        $this->crawler = $this->client->submit($form);
     }
 }
