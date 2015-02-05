@@ -6,8 +6,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use TuByuem\Skrobaczka\Action\Init;
 use TuByuem\Skrobaczka\Action\Login;
-use TuByuem\Skrobaczka\Action\VisitMainpage;
 
 /**
  * Description of Scrap
@@ -17,23 +17,16 @@ use TuByuem\Skrobaczka\Action\VisitMainpage;
 class Scrap extends Command
 {
     /**
-     * @var VisitMainpage
+     * @var Init
      */
-    private $visitMainpage;
+    private $init;
 
     /**
-     * @var Login
+     * @param Init $init
      */
-    private $loginAction;
-
-    /**
-     * @param VisitMainpage $visitMainpage
-     * @param Login         $loginAction
-     */
-    public function __construct(VisitMainpage $visitMainpage, Login $loginAction)
+    public function __construct(Init $init)
     {
-        $this->visitMainpage = $visitMainpage;
-        $this->loginAction = $loginAction;
+        $this->init = $init;
 
         parent::__construct();
     }
@@ -43,13 +36,20 @@ class Scrap extends Command
         $this->setName('skrobaczka:scrap')
                 ->addArgument('address', InputArgument::REQUIRED, 'Adres forum do pobrania')
                 ->addArgument('db', InputArgument::REQUIRED, 'Dane bazy do wypełnienia (uri PDO)')
-                ->addArgument('login', InputArgument::REQUIRED, 'Login do konta administracyjnego')
+                ->addArgument('username', InputArgument::REQUIRED, 'Login do konta administracyjnego')
                 ->addArgument('password', InputArgument::REQUIRED, 'Hasło do konta administracyjnego');
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->visitMainpage->visit($input->getArgument('address'));
-        $this->loginAction->login($input->getArgument('login'), $input->getArgument('password'));
+        $this->init->init(
+            $input->getArgument('address'),
+            $input->getArgument('username'),
+            $input->getArgument('password')
+        );
     }
 }

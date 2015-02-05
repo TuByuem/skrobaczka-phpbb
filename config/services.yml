@@ -4,6 +4,7 @@ parameters:
     client.class: Goutte\Client
     action.visit_mainpage.class: TuByuem\Skrobaczka\Action\VisitMainpage
     action.login.class: TuByuem\Skrobaczka\Action\Login
+    action.init.class: TuByuem\Skrobaczka\Action\Init
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -12,8 +13,7 @@ services:
     scrap:
         class: %scrap.class%
         arguments:
-            - @action.visit_mainpage
-            - @action.login
+            - @action.init
         tags:
             -
                 name: console.command
@@ -29,3 +29,8 @@ services:
             - @client
             - @action.visit_mainpage
             - %login.options%
+    action.init:
+        class: %action.init.class%
+        arguments:
+            - @action.visit_mainpage
+            - @action.login
