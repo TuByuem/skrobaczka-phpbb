@@ -19,7 +19,7 @@ abstract class AbstractAction implements ActionInterface
      * @return Crawler
      * @throws ActionNotReadyException
      */
-    public function getCrawler()
+    public function getActualCrawler()
     {
         if ($this->crawler === null) {
             throw new ActionNotReadyException($this);

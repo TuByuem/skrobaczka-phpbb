@@ -40,7 +40,7 @@ class AdminLogin extends AbstractAction
     public function login($username, $password)
     {
         $this->adminLoginVisitor->visit();
-        $loginCrawler = $this->adminLoginVisitor->getCrawler();
+        $loginCrawler = $this->adminLoginVisitor->getActualCrawler();
         $this->crawler = $this->loginFormHelper->submitForm($loginCrawler, $username, $password);
         die($this->crawler->html());
     }
