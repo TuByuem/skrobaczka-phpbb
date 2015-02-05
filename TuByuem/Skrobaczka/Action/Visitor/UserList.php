@@ -3,13 +3,14 @@
 namespace TuByuem\Skrobaczka\Action\Visitor;
 
 use Symfony\Component\BrowserKit\Client;
+use Symfony\Component\DomCrawler\Crawler;
 use TuByuem\Skrobaczka\Action\Login as LoginAction;
 use TuByuem\Skrobaczka\Exception\InvalidConfigurationException;
 
 /**
  * @author TuByuem <tubyuem@wp.pl>
  */
-class UserList extends AbstractVisitor
+class UserList extends AbstractPagedVisitor
 {
     /**
      * @var Client
@@ -27,6 +28,11 @@ class UserList extends AbstractVisitor
     private $options;
 
     /**
+     * @var Crawler
+     */
+    private $firstPageCrawler;
+
+    /**
      * @param Client      $client
      * @param LoginAction $loginAction
      * @param array       $options
@@ -42,10 +48,40 @@ class UserList extends AbstractVisitor
         $this->options = $options;
     }
 
-    public function visit()
+    /**
+     * {@inheritdoc}
+     */
+    public function visit($pageNumber)
     {
-        $crawler = $this->loginAction->getCrawler();
+        if ($this->firstPageCrawler === null) {
+            $this->firstPageCrawler = $this->getFirstPageCrawler();
+        }
+
+        if ($pageNumber === 1) {
+            $this->crawler = $this->firstPageCrawler;
+        } else {
+            $this->visitPage($pageNumber);
+        }
+    }
+
+    /**
+     * @return Crawler
+     */
+    private function getFirstPageCrawler()
+    {
+        $crawler = $this->loginAction->getActualCrawler();
         $linkCrawler = $crawler->selectLink($this->options['userlist_link_text']);
+
+        return $this->client->click($linkCrawler->link());
+    }
+
+    /**
+     * @param int $pageNumber
+     */
+    private function visitPage($pageNumber)
+    {
+        $crawler = $this->firstPageCrawler;
+        $linkCrawler = $crawler->selectLink((string) $pageNumber);
         $this->crawler = $this->client->click($linkCrawler->link());
     }
 }

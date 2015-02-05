@@ -57,7 +57,7 @@ class Scrap extends Command
             $username,
             $password
         );
-        $this->userlistVisitor->visit();
-        $output->writeln($this->userlistVisitor->getCrawler()->html());
+        $this->userlistVisitor->visit(3);
+        $output->writeln($this->userlistVisitor->getActualCrawler()->html());
     }
 }

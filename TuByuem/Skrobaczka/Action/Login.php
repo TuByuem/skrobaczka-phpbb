@@ -35,7 +35,7 @@ class Login extends AbstractAction
     public function login($username, $password)
     {
         $this->loginVisitor->visit();
-        $loginCrawler  = $this->loginVisitor->getCrawler();
+        $loginCrawler  = $this->loginVisitor->getActualCrawler();
         $this->crawler = $this->loginFormHelper->submitForm($loginCrawler, $username, $password);
     }
 }

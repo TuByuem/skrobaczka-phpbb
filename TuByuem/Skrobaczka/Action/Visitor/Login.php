@@ -11,7 +11,7 @@ use TuByuem\Skrobaczka\Exception\InvalidConfigurationException;
 /**
  * @author TuByuem <tubyuem@wp.pl>
  */
-class Login extends AbstractVisitor
+class Login extends AbstractStaticVisitor
 {
     /**
      * @var Client
@@ -45,7 +45,7 @@ class Login extends AbstractVisitor
 
     public function visit()
     {
-        $crawler = $this->visitMainpageAction->getCrawler();
+        $crawler = $this->visitMainpageAction->getActualCrawler();
         $loginLink = $this->getLoginLink($crawler->selectLink($this->options['link_text']));
         $this->crawler = $this->client->click($loginLink);
     }

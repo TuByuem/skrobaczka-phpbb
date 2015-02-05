@@ -7,7 +7,7 @@ use TuByuem\Skrobaczka\Action\AbstractAction;
 /**
  * @author TuByuem <tubyuem@wp.pl>
  */
-abstract class AbstractVisitor extends AbstractAction
+abstract class AbstractStaticVisitor extends AbstractAction
 {
     abstract public function visit();
 }
