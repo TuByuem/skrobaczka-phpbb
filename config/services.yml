@@ -1,0 +1,63 @@
+parameters:
+    event_dispatcher.class: Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher
+    scrap.class: TuByuem\Skrobaczka\Command\Scrap
+    client.class: Goutte\Client
+    action.visitor.mainpage.class: TuByuem\Skrobaczka\Action\Visitor\Mainpage
+    action.visitor.login.class: TuByuem\Skrobaczka\Action\Visitor\Login
+    action.visitor.admin_login.class: TuByuem\Skrobaczka\Action\Visitor\AdminLogin
+    action.login.class: TuByuem\Skrobaczka\Action\Login
+    action.admin_login.class: TuByuem\Skrobaczka\Action\AdminLogin
+    action.init.class: TuByuem\Skrobaczka\Action\Init
+    action.visitor.admin_panel.class: TuByuem\Skrobaczka\Action\Visitor\AdminPanel
+    action.helper.submit_login_form.class: TuByuem\Skrobaczka\Action\Helper\SubmitLoginForm
+services:
+    event_dispatcher:
+        class: %event_dispatcher.class%
+        arguments:
+            - @service_container
+    scrap:
+        class: %scrap.class%
+        arguments:
+            - @action.init
+            - @action.admin_login
+        tags:
+            -
+                name: console.command
+    client:
+        class: %client.class%
+    action.helper.submit_login_form:
+        class: %action.helper.submit_login_form.class%
+        arguments:
+            - @client
+            - %login.options%
+    action.visitor.mainpage:
+        class: %action.visitor.mainpage.class%
+        arguments:
+            - @client
+    action.visitor.login:
+        class: %action.visitor.login.class%
+        arguments:
+            - @client
+            - @action.visitor.mainpage
+            - %login.options%
+    action.login:
+        class: %action.login.class%
+        arguments:
+            - @action.visitor.login
+            - @action.helper.submit_login_form
+    action.admin_login:
+        class: %action.admin_login.class%
+        arguments:
+            - @action.visitor.admin_login
+            - @action.helper.submit_login_form
+    action.init:
+        class: %action.init.class%
+        arguments:
+            - @action.visitor.mainpage
+            - @action.login
+    action.visitor.admin_login:
+        class: %action.visitor.admin_login.class%
+        arguments:
+            - @client
+            - @action.login
+            - %visitor.admin_panel.options%

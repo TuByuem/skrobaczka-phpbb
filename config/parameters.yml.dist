@@ -1,0 +1,6 @@
+parameters:
+    login.options:
+        button_text: Zaloguj
+        link_text: Zaloguj
+    visitor.admin_panel.options:
+        link_text: Panel Administracyjny
