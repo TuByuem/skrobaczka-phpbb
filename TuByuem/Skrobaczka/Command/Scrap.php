@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use TuByuem\Skrobaczka\Action\AdminLogin;
 use TuByuem\Skrobaczka\Action\Init;
 use TuByuem\Skrobaczka\Action\Login;
 
@@ -22,11 +23,17 @@ class Scrap extends Command
     private $init;
 
     /**
+     * @var Login
+     */
+    private $adminLoginAction;
+
+    /**
      * @param Init $init
      */
-    public function __construct(Init $init)
+    public function __construct(Init $init, AdminLogin $adminLoginAction)
     {
         $this->init = $init;
+        $this->adminLoginAction = $adminLoginAction;
 
         parent::__construct();
     }
@@ -46,10 +53,14 @@ class Scrap extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $username = $input->getArgument('username');
+        $password = $input->getArgument('password');
         $this->init->init(
             $input->getArgument('address'),
             $input->getArgument('username'),
             $input->getArgument('password')
         );
+        $this->adminLoginAction->login($username, $password);
+        die($this->adminLoginAction->getCrawler()->html());
     }
 }

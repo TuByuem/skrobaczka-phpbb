@@ -1,16 +1,15 @@
 <?php
 
-namespace TuByuem\Skrobaczka\Action;
+namespace TuByuem\Skrobaczka\Action\Visitor;
 
 use Symfony\Component\BrowserKit\Client;
-use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * Description of VisitMainpageAction
  *
  * @author TuByuem <tubyuem@wp.pl>
  */
-class VisitMainpage extends AbstractAction
+class Mainpage extends AbstractUrlVisitor
 {
     /**
      * @var Client

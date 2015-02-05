@@ -2,15 +2,17 @@
 
 namespace TuByuem\Skrobaczka\Action;
 
+use TuByuem\Skrobaczka\Action\Visitor\Mainpage;
+
 /**
  * @author TuByuem <tubyuem@wp.pl>
  */
 class Init extends AbstractAction
 {
     /**
-     * @var VisitMainpage
+     * @var Mainpage
      */
-    private $visitMainpageAction;
+    private $mainpageVisitor;
 
     /**
      * @var Login
@@ -18,12 +20,12 @@ class Init extends AbstractAction
     private $loginAction;
 
     /**
-     * @param VisitMainpage $visitMainpageAction
-     * @param Login         $loginAction
+     * @param Mainpage $mainpageVisitor
+     * @param Login    $loginAction
      */
-    public function __construct(VisitMainpage $visitMainpageAction, Login $loginAction)
+    public function __construct(Mainpage $mainpageVisitor, Login $loginAction)
     {
-        $this->visitMainpageAction = $visitMainpageAction;
+        $this->mainpageVisitor = $mainpageVisitor;
         $this->loginAction = $loginAction;
     }
 
@@ -34,7 +36,7 @@ class Init extends AbstractAction
      */
     public function init($url, $username, $password)
     {
-        $this->visitMainpageAction->visit($url);
+        $this->mainpageVisitor->visit($url);
         $this->crawler = $this->loginAction->login($username, $password);
     }
 }
