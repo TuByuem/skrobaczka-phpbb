@@ -94,6 +94,5 @@ class Login extends AbstractAction
             ]
         );
         $this->crawler = $this->client->submit($form);
-        die($this->crawler->html());
     }
 }
