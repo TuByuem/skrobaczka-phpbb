@@ -10,6 +10,7 @@ parameters:
     action.init.class: TuByuem\Skrobaczka\Action\Init
     action.visitor.admin_panel.class: TuByuem\Skrobaczka\Action\Visitor\AdminPanel
     action.helper.submit_login_form.class: TuByuem\Skrobaczka\Action\Helper\SubmitLoginForm
+    action.visitor.userlist.class: TuByuem\Skrobaczka\Action\Visitor\UserList
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -19,7 +20,7 @@ services:
         class: %scrap.class%
         arguments:
             - @action.init
-            - @action.admin_login
+            - @action.visitor.userlist
         tags:
             -
                 name: console.command
@@ -61,3 +62,9 @@ services:
             - @client
             - @action.login
             - %visitor.admin_panel.options%
+    action.visitor.userlist:
+        class: %action.visitor.userlist.class%
+        arguments:
+            - @client
+            - @action.login
+            - %mainpage.options%

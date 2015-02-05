@@ -6,13 +6,10 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use TuByuem\Skrobaczka\Action\AdminLogin;
 use TuByuem\Skrobaczka\Action\Init;
-use TuByuem\Skrobaczka\Action\Login;
+use TuByuem\Skrobaczka\Action\Visitor\UserList;
 
 /**
- * Description of Scrap
- *
  * @author TuByuem <tubyuem@wp.pl>
  */
 class Scrap extends Command
@@ -23,17 +20,17 @@ class Scrap extends Command
     private $init;
 
     /**
-     * @var Login
+     * @var UserList
      */
-    private $adminLoginAction;
+    private $userlistVisitor;
 
     /**
      * @param Init $init
      */
-    public function __construct(Init $init, AdminLogin $adminLoginAction)
+    public function __construct(Init $init, UserList $userlistVisitor)
     {
         $this->init = $init;
-        $this->adminLoginAction = $adminLoginAction;
+        $this->userlistVisitor = $userlistVisitor;
 
         parent::__construct();
     }
@@ -57,10 +54,10 @@ class Scrap extends Command
         $password = $input->getArgument('password');
         $this->init->init(
             $input->getArgument('address'),
-            $input->getArgument('username'),
-            $input->getArgument('password')
+            $username,
+            $password
         );
-        $this->adminLoginAction->login($username, $password);
-        die($this->adminLoginAction->getCrawler()->html());
+        $this->userlistVisitor->visit();
+        $output->writeln($this->userlistVisitor->getCrawler()->html());
     }
 }

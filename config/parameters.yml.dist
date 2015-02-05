@@ -4,3 +4,5 @@ parameters:
         link_text: Zaloguj
     visitor.admin_panel.options:
         link_text: Panel Administracyjny
+    mainpage.options:
+        userlist_link_text: Użytkownicy
