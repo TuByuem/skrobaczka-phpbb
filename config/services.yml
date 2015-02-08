@@ -8,9 +8,13 @@ parameters:
     action.login.class: TuByuem\Skrobaczka\Action\Login
     action.admin_login.class: TuByuem\Skrobaczka\Action\AdminLogin
     action.init.class: TuByuem\Skrobaczka\Action\Init
-    action.visitor.admin_panel.class: TuByuem\Skrobaczka\Action\Visitor\AdminPanel
+    action.visitor.admin_menu.class: TuByuem\Skrobaczka\Action\Visitor\AdminMenu
     action.helper.submit_login_form.class: TuByuem\Skrobaczka\Action\Helper\SubmitLoginForm
     action.visitor.userlist.class: TuByuem\Skrobaczka\Action\Visitor\UserList
+    action.helper.user_link_fetcher.class: TuByuem\Skrobaczka\Action\Helper\UserLinkFetcher
+    scraper.multi_user_scraper.class: TuByuem\Skrobaczka\Scraper\MultiUserScraper
+    action.visitor.search_admin_user.class: TuByuem\Skrobaczka\Action\Visitor\SearchAdminUser
+    action.find_admin_user_page.class: TuByuem\Skrobaczka\Action\FindAdminUserPage
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -20,7 +24,8 @@ services:
         class: %scrap.class%
         arguments:
             - @action.init
-            - @action.visitor.userlist
+            - @action.find_admin_user_page
+            - @action.admin_login
         tags:
             -
                 name: console.command
@@ -68,3 +73,27 @@ services:
             - @client
             - @action.login
             - %mainpage.options%
+    action.helper.user_link_fetcher:
+        class: %action.helper.user_link_fetcher.class%
+    scraper.multi_user_scraper:
+        class: %scraper.multi_user_scraper.class%
+        arguments:
+            - @action.visitor.userlist
+            - @action.helper.user_link_fetcher
+    action.visitor.admin_menu:
+        class: %action.visitor.admin_menu.class%
+        arguments:
+            - @action.admin_login
+            - @client
+    action.visitor.search_admin_user:
+        class: %action.visitor.search_admin_user.class%
+        arguments:
+            - @action.visitor.admin_menu
+            - @client
+            - %admin_menu.options%
+    action.find_admin_user_page:
+        class: %action.find_admin_user_page.class%
+        arguments:
+            - @client
+            - @action.visitor.search_admin_user
+            - %admin_user_panel.options%

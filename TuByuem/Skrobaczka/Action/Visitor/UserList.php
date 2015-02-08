@@ -13,11 +13,6 @@ use TuByuem\Skrobaczka\Exception\InvalidConfigurationException;
 class UserList extends AbstractPagedVisitor
 {
     /**
-     * @var Client
-     */
-    private $client;
-
-    /**
      * @var LoginAction
      */
     private $loginAction;
@@ -26,11 +21,6 @@ class UserList extends AbstractPagedVisitor
      * @var array
      */
     private $options;
-
-    /**
-     * @var Crawler
-     */
-    private $firstPageCrawler;
 
     /**
      * @param Client      $client
@@ -43,45 +33,19 @@ class UserList extends AbstractPagedVisitor
             throw new InvalidConfigurationException('You must provide \'userlist_link_text\' option to UserList visitor.');
         }
 
-        $this->client = $client;
         $this->loginAction = $loginAction;
         $this->options = $options;
+
+        parent::__construct($client);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function visit($pageNumber)
-    {
-        if ($this->firstPageCrawler === null) {
-            $this->firstPageCrawler = $this->getFirstPageCrawler();
-        }
-
-        if ($pageNumber === 1) {
-            $this->crawler = $this->firstPageCrawler;
-        } else {
-            $this->visitPage($pageNumber);
-        }
-    }
-
-    /**
-     * @return Crawler
-     */
-    private function getFirstPageCrawler()
+    protected function getFirstPageLink()
     {
         $crawler = $this->loginAction->getActualCrawler();
-        $linkCrawler = $crawler->selectLink($this->options['userlist_link_text']);
 
-        return $this->client->click($linkCrawler->link());
-    }
-
-    /**
-     * @param int $pageNumber
-     */
-    private function visitPage($pageNumber)
-    {
-        $crawler = $this->firstPageCrawler;
-        $linkCrawler = $crawler->selectLink((string) $pageNumber);
-        $this->crawler = $this->client->click($linkCrawler->link());
+        return $crawler->selectLink($this->options['userlist_link_text']);
     }
 }

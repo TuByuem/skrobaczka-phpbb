@@ -10,4 +10,11 @@ use TuByuem\Skrobaczka\Action\AbstractAction;
 abstract class AbstractStaticVisitor extends AbstractAction
 {
     abstract public function visit();
+
+    public function visitIfNotReady()
+    {
+        if (!$this->isReady()) {
+            $this->visit();
+        }
+    }
 }

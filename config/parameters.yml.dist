@@ -6,3 +6,9 @@ parameters:
         link_text: Panel Administracyjny
     mainpage.options:
         userlist_link_text: Użytkownicy
+    admin_menu.options:
+        manage_users_link_text: Zarządzaj
+        user_section_caption: Użytkownicy
+        cattitle_selector: .cattitle
+    admin_user_panel.options:
+        show_user_button_text: Pokaż użytkownika

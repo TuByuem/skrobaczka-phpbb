@@ -6,8 +6,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use TuByuem\Skrobaczka\Action\AdminLogin;
+use TuByuem\Skrobaczka\Action\FindAdminUserPage;
 use TuByuem\Skrobaczka\Action\Init;
-use TuByuem\Skrobaczka\Action\Visitor\UserList;
 
 /**
  * @author TuByuem <tubyuem@wp.pl>
@@ -20,18 +21,25 @@ class Scrap extends Command
     private $init;
 
     /**
-     * @var UserList
+     * @var FindAdminUserPage
      */
-    private $userlistVisitor;
+    private $findAdminUserPageAction;
 
     /**
-     * @param Init $init
+     * @var AdminLogin
      */
-    public function __construct(Init $init, UserList $userlistVisitor)
+    private $adminLoginAction;
+
+    /**
+     * @param Init              $init
+     * @param FindAdminUserPage $findAdminUserPageAction
+     * @param AdminLogin        $adminLoginAction
+     */
+    public function __construct(Init $init, FindAdminUserPage $findAdminUserPageAction, AdminLogin $adminLoginAction)
     {
         $this->init = $init;
-        $this->userlistVisitor = $userlistVisitor;
-
+        $this->findAdminUserPageAction = $findAdminUserPageAction;
+        $this->adminLoginAction = $adminLoginAction;
         parent::__construct();
     }
 
@@ -57,7 +65,8 @@ class Scrap extends Command
             $username,
             $password
         );
-        $this->userlistVisitor->visit(3);
-        $output->writeln($this->userlistVisitor->getActualCrawler()->html());
+        $this->adminLoginAction->login($username, $password);
+        $this->findAdminUserPageAction->find('TuByuem');
+        $output->writeln($this->findAdminUserPageAction->getActualCrawler()->html());
     }
 }
