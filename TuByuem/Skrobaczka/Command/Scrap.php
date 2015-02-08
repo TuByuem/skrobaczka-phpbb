@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TuByuem\Skrobaczka\Action\AdminLogin;
 use TuByuem\Skrobaczka\Action\Init;
-use TuByuem\Skrobaczka\Action\Visitor\AdminMenu;
+use TuByuem\Skrobaczka\Action\Visitor\SearchAdminUser;
 
 /**
  * @author TuByuem <tubyuem@wp.pl>
@@ -21,19 +21,19 @@ class Scrap extends Command
     private $init;
 
     /**
-     * @var AdminMenu
+     * @var SearchAdminUser
      */
-    private $adminMenuVisitor;
+    private $searchAdminUserVisitor;
 
     /**
      * @var AdminLogin
      */
     private $adminLoginAction;
 
-    public function __construct(Init $init, AdminMenu $adminMenuVisitor, AdminLogin $adminLoginAction)
+    public function __construct(Init $init, SearchAdminUser $searchAdminUserVisitor, AdminLogin $adminLoginAction)
     {
         $this->init = $init;
-        $this->adminMenuVisitor = $adminMenuVisitor;
+        $this->searchAdminUserVisitor = $searchAdminUserVisitor;
         $this->adminLoginAction = $adminLoginAction;
         parent::__construct();
     }
@@ -61,7 +61,7 @@ class Scrap extends Command
             $password
         );
         $this->adminLoginAction->login($username, $password);
-        $this->adminMenuVisitor->visit();
-        $output->writeln($this->adminMenuVisitor->getActualCrawler()->html());
+        $this->searchAdminUserVisitor->visit();
+        $output->writeln($this->searchAdminUserVisitor->getActualCrawler()->html());
     }
 }

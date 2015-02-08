@@ -13,6 +13,7 @@ parameters:
     action.visitor.userlist.class: TuByuem\Skrobaczka\Action\Visitor\UserList
     action.helper.user_link_fetcher.class: TuByuem\Skrobaczka\Action\Helper\UserLinkFetcher
     scraper.multi_user_scraper.class: TuByuem\Skrobaczka\Scraper\MultiUserScraper
+    action.visitor.search_admin_user.class: TuByuem\Skrobaczka\Action\Visitor\SearchAdminUser
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -22,7 +23,7 @@ services:
         class: %scrap.class%
         arguments:
             - @action.init
-            - @action.visitor.admin_menu
+            - @action.visitor.search_admin_user
             - @action.admin_login
         tags:
             -
@@ -83,3 +84,9 @@ services:
         arguments:
             - @action.admin_login
             - @client
+    action.visitor.search_admin_user:
+        class: %action.visitor.search_admin_user.class%
+        arguments:
+            - @action.visitor.admin_menu
+            - @client
+            - %admin_menu.options%
