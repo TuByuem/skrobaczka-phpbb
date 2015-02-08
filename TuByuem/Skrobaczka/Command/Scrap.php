@@ -7,8 +7,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TuByuem\Skrobaczka\Action\AdminLogin;
+use TuByuem\Skrobaczka\Action\FindAdminUserPage;
 use TuByuem\Skrobaczka\Action\Init;
-use TuByuem\Skrobaczka\Action\Visitor\SearchAdminUser;
 
 /**
  * @author TuByuem <tubyuem@wp.pl>
@@ -21,19 +21,24 @@ class Scrap extends Command
     private $init;
 
     /**
-     * @var SearchAdminUser
+     * @var FindAdminUserPage
      */
-    private $searchAdminUserVisitor;
+    private $findAdminUserPageAction;
 
     /**
      * @var AdminLogin
      */
     private $adminLoginAction;
 
-    public function __construct(Init $init, SearchAdminUser $searchAdminUserVisitor, AdminLogin $adminLoginAction)
+    /**
+     * @param Init              $init
+     * @param FindAdminUserPage $findAdminUserPageAction
+     * @param AdminLogin        $adminLoginAction
+     */
+    public function __construct(Init $init, FindAdminUserPage $findAdminUserPageAction, AdminLogin $adminLoginAction)
     {
         $this->init = $init;
-        $this->searchAdminUserVisitor = $searchAdminUserVisitor;
+        $this->findAdminUserPageAction = $findAdminUserPageAction;
         $this->adminLoginAction = $adminLoginAction;
         parent::__construct();
     }
@@ -61,7 +66,7 @@ class Scrap extends Command
             $password
         );
         $this->adminLoginAction->login($username, $password);
-        $this->searchAdminUserVisitor->visit();
-        $output->writeln($this->searchAdminUserVisitor->getActualCrawler()->html());
+        $this->findAdminUserPageAction->find('TuByuem');
+        $output->writeln($this->findAdminUserPageAction->getActualCrawler()->html());
     }
 }
