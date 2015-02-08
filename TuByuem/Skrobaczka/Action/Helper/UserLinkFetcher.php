@@ -26,6 +26,20 @@ class UserLinkFetcher
     }
 
     /**
+     * @param  Crawler   $listPageCrawler
+     * @return Crawler[]
+     */
+    public function fetchUserLinkCrawlers(Crawler $listPageCrawler)
+    {
+        $linkCrawlers = [];
+        $this->eachUserLink($listPageCrawler, function (Crawler $linkCrawler, $i) use (&$linkCrawlers) {
+            $linkCrawlers[] = $linkCrawler;
+        });
+
+        return $linkCrawlers;
+    }
+
+    /**
      * @param  Crawler $listPageCrawler
      * @return array
      */

@@ -6,9 +6,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use TuByuem\Skrobaczka\Action\Helper\UserLinkFetcher;
 use TuByuem\Skrobaczka\Action\Init;
-use TuByuem\Skrobaczka\Action\Visitor\UserList;
+use TuByuem\Skrobaczka\Scraper\UserScraper;
 
 /**
  * @author TuByuem <tubyuem@wp.pl>
@@ -21,20 +20,18 @@ class Scrap extends Command
     private $init;
 
     /**
-     * @var UserList
+     * @var UserScraper
      */
-    private $userlistVisitor;
+    private $userScraper;
 
     /**
-     * @var UserLinkFetcher
+     * @param Init        $init
+     * @param UserScraper $userScraper
      */
-    private $userLinkFetcher;
-
-    public function __construct(Init $init, UserList $userlistVisitor, UserLinkFetcher $userLinkFetcher)
+    public function __construct(Init $init, UserScraper $userScraper)
     {
         $this->init = $init;
-        $this->userlistVisitor = $userlistVisitor;
-        $this->userLinkFetcher = $userLinkFetcher;
+        $this->userScraper = $userScraper;
         parent::__construct();
     }
 
@@ -60,7 +57,6 @@ class Scrap extends Command
             $username,
             $password
         );
-        $this->userlistVisitor->visit(2);
-        var_dump($this->userLinkFetcher->fetchUsernames($this->userlistVisitor->getActualCrawler()));
+        $this->userScraper->scrap();
     }
 }

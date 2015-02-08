@@ -12,6 +12,7 @@ parameters:
     action.helper.submit_login_form.class: TuByuem\Skrobaczka\Action\Helper\SubmitLoginForm
     action.visitor.userlist.class: TuByuem\Skrobaczka\Action\Visitor\UserList
     action.helper.user_link_fetcher.class: TuByuem\Skrobaczka\Action\Helper\UserLinkFetcher
+    scraper.user_scraper.class: TuByuem\Skrobaczka\Scraper\UserScraper
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -21,8 +22,7 @@ services:
         class: %scrap.class%
         arguments:
             - @action.init
-            - @action.visitor.userlist
-            - @action.helper.user_link_fetcher
+            - @scraper.user_scraper
         tags:
             -
                 name: console.command
@@ -72,3 +72,8 @@ services:
             - %mainpage.options%
     action.helper.user_link_fetcher:
         class: %action.helper.user_link_fetcher.class%
+    scraper.user_scraper:
+        class: %scraper.user_scraper.class%
+        arguments:
+            - @action.visitor.userlist
+            - @action.helper.user_link_fetcher
