@@ -8,7 +8,7 @@ use TuByuem\Skrobaczka\Action\Visitor\UserList;
 /**
  * @author TuByuem <tubyuem@wp.pl>
  */
-class UserScraper implements MultiScraper
+class MultiUserScraper implements MultiScraper
 {
     /**
      * @var UserList

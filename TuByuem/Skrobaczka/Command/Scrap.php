@@ -7,7 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use TuByuem\Skrobaczka\Action\Init;
-use TuByuem\Skrobaczka\Scraper\UserScraper;
+use TuByuem\Skrobaczka\Scraper\MultiUserScraper;
 
 /**
  * @author TuByuem <tubyuem@wp.pl>
@@ -20,15 +20,15 @@ class Scrap extends Command
     private $init;
 
     /**
-     * @var UserScraper
+     * @var MultiUserScraper
      */
     private $userScraper;
 
     /**
-     * @param Init        $init
-     * @param UserScraper $userScraper
+     * @param Init             $init
+     * @param MultiUserScraper $userScraper
      */
-    public function __construct(Init $init, UserScraper $userScraper)
+    public function __construct(Init $init, MultiUserScraper $userScraper)
     {
         $this->init = $init;
         $this->userScraper = $userScraper;
