@@ -8,7 +8,7 @@ parameters:
     action.login.class: TuByuem\Skrobaczka\Action\Login
     action.admin_login.class: TuByuem\Skrobaczka\Action\AdminLogin
     action.init.class: TuByuem\Skrobaczka\Action\Init
-    action.visitor.admin_panel.class: TuByuem\Skrobaczka\Action\Visitor\AdminPanel
+    action.visitor.admin_menu.class: TuByuem\Skrobaczka\Action\Visitor\AdminMenu
     action.helper.submit_login_form.class: TuByuem\Skrobaczka\Action\Helper\SubmitLoginForm
     action.visitor.userlist.class: TuByuem\Skrobaczka\Action\Visitor\UserList
     action.helper.user_link_fetcher.class: TuByuem\Skrobaczka\Action\Helper\UserLinkFetcher
@@ -22,7 +22,8 @@ services:
         class: %scrap.class%
         arguments:
             - @action.init
-            - @scraper.multi_user_scraper
+            - @action.visitor.admin_menu
+            - @action.admin_login
         tags:
             -
                 name: console.command
@@ -77,3 +78,8 @@ services:
         arguments:
             - @action.visitor.userlist
             - @action.helper.user_link_fetcher
+    action.visitor.admin_menu:
+        class: %action.visitor.admin_menu.class%
+        arguments:
+            - @action.admin_login
+            - @client

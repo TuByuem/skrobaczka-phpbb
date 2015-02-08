@@ -6,8 +6,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use TuByuem\Skrobaczka\Action\AdminLogin;
 use TuByuem\Skrobaczka\Action\Init;
-use TuByuem\Skrobaczka\Scraper\MultiUserScraper;
+use TuByuem\Skrobaczka\Action\Visitor\AdminMenu;
 
 /**
  * @author TuByuem <tubyuem@wp.pl>
@@ -20,18 +21,20 @@ class Scrap extends Command
     private $init;
 
     /**
-     * @var MultiUserScraper
+     * @var AdminMenu
      */
-    private $userScraper;
+    private $adminMenuVisitor;
 
     /**
-     * @param Init             $init
-     * @param MultiUserScraper $userScraper
+     * @var AdminLogin
      */
-    public function __construct(Init $init, MultiUserScraper $userScraper)
+    private $adminLoginAction;
+
+    public function __construct(Init $init, AdminMenu $adminMenuVisitor, AdminLogin $adminLoginAction)
     {
         $this->init = $init;
-        $this->userScraper = $userScraper;
+        $this->adminMenuVisitor = $adminMenuVisitor;
+        $this->adminLoginAction = $adminLoginAction;
         parent::__construct();
     }
 
@@ -57,6 +60,8 @@ class Scrap extends Command
             $username,
             $password
         );
-        $this->userScraper->scrap();
+        $this->adminLoginAction->login($username, $password);
+        $this->adminMenuVisitor->visit();
+        $output->writeln($this->adminMenuVisitor->getActualCrawler()->html());
     }
 }
