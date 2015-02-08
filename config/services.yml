@@ -11,6 +11,7 @@ parameters:
     action.visitor.admin_panel.class: TuByuem\Skrobaczka\Action\Visitor\AdminPanel
     action.helper.submit_login_form.class: TuByuem\Skrobaczka\Action\Helper\SubmitLoginForm
     action.visitor.userlist.class: TuByuem\Skrobaczka\Action\Visitor\UserList
+    action.helper.user_link_fetcher.class: TuByuem\Skrobaczka\Action\Helper\UserLinkFetcher
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -21,6 +22,7 @@ services:
         arguments:
             - @action.init
             - @action.visitor.userlist
+            - @action.helper.user_link_fetcher
         tags:
             -
                 name: console.command
@@ -68,3 +70,5 @@ services:
             - @client
             - @action.login
             - %mainpage.options%
+    action.helper.user_link_fetcher:
+        class: %action.helper.user_link_fetcher.class%
