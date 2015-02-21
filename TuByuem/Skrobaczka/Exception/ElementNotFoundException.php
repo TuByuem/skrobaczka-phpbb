@@ -5,7 +5,7 @@ namespace TuByuem\Skrobaczka\Exception;
 use LogicException;
 
 /**
- * Description of ElementNotFoundException
+ * Description of ElementNotFoundException.
  *
  * @author TuByuem <tubyuem@wp.pl>
  */

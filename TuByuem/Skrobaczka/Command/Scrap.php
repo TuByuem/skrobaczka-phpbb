@@ -66,7 +66,10 @@ class Scrap extends Command
             $password
         );
         $this->adminLoginAction->login($username, $password);
-        $this->findAdminUserPageAction->find('TuByuem');
-        $output->writeln($this->findAdminUserPageAction->getActualCrawler()->html());
+        $this->findAdminUserPageAction->find('Dziwak');
+        $userPageCrawler = $this->findAdminUserPageAction->getActualCrawler();
+        $formCrawler = $userPageCrawler->filter('form');
+        $scraper = new \TuByuem\Skrobaczka\Scraper\Helper\FormScraper();
+        $scraper->scrapFormFields($formCrawler);
     }
 }

@@ -10,8 +10,9 @@ use TuByuem\Skrobaczka\Action\AbstractAction;
 interface SingleScraper
 {
     /**
-     * @param  AbstractAction $action Initialized action that returns crawler for the page to scrap
-     * @return Object         Model object
+     * @param AbstractAction $action Initialized action that returns crawler for the page to scrap
+     *
+     * @return Object Model object
      */
     public function scrap(AbstractAction $action);
 }

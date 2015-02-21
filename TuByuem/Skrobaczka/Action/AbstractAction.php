@@ -17,6 +17,7 @@ abstract class AbstractAction implements ActionInterface
 
     /**
      * @return Crawler
+     *
      * @throws ActionNotReadyException
      */
     public function getActualCrawler()

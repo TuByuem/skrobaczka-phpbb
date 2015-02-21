@@ -5,7 +5,7 @@ namespace TuByuem\Skrobaczka\Action\Visitor;
 use Symfony\Component\BrowserKit\Client;
 
 /**
- * Description of VisitMainpageAction
+ * Description of VisitMainpageAction.
  *
  * @author TuByuem <tubyuem@wp.pl>
  */

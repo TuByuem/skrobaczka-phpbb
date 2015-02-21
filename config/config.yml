@@ -1,0 +1,75 @@
+parameters:
+    property_access.magic_call: false
+    property_access.ignore_invalid_index: false
+    form_mapping:
+        TuByuem\Skrobaczka\Model\User:
+            id:
+                field: id
+                mapping:  integer
+            username:
+                field: username
+            email:
+                field: email
+            icqNumber:
+                field: icq
+            aimNumber:
+                field: aim
+            msnNumber:
+                field: msn
+            yahooNumber:
+                field: yim
+            website:
+                field: website
+            location:
+                field: location
+            ocupation:
+                field: ocupation
+            hobbies:
+                field: interests
+            signature:
+                field: signature
+            emailShown:
+                field: viewemail
+                mapping: boolean
+            presenceHidden:
+                field: hideonline
+                mapping: boolean
+            repliesAnnounced:
+                field: notifyreply
+                mapping: boolean
+            pmAnnounced:
+                field: notifypm
+                mapping: boolean
+            pmWindowOpened:
+                field: popup_pm
+                mapping: boolean
+            signatureAppended:
+                field: attachsig
+                mapping: boolean
+            bbcodeEnabled:
+                field: allowbbcode
+                mapping: boolean
+            htmlEnabled:
+                field: allowHtml
+                mapping: boolean
+            emotesEnabled:
+                field: allowsmiles
+                mapping: boolean
+            boardLanguage:
+                field: language
+            timezone:
+                field: timezone
+            dateFormat:
+                field: dateformat
+            userActive:
+                field: user_status
+                mapping: boolean
+            pmEnabled:
+                field: user_allowpm
+                mapping: boolean
+            avatarEnabled:
+                field: user_allowavatar
+                mapping: boolean
+            galleryEnabled:
+                field: user_allowimageupload
+                mapping: boolean

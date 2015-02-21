@@ -51,8 +51,10 @@ class Login extends AbstractStaticVisitor
     }
 
     /**
-     * @param  Crawler                  $crawler
+     * @param Crawler $crawler
+     *
      * @return Link
+     *
      * @throws ElementNotFoundException
      */
     private function getLoginLink(Crawler $crawler)

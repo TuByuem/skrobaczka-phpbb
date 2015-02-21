@@ -16,7 +16,7 @@
         "symfony/property-access": "~2.6"
     },
     "autoload": {
-        "files": ["TuByuem/Skrobaczka/DependencyInjection/AddConsoleCommandPass.php"],
+        "files": ["TuByuem/Skrobaczka/DependencyInjection/Compiler/AddConsoleCommandPass.php"],
         "psr-0": {
             "": "."
         }

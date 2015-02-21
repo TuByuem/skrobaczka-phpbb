@@ -25,7 +25,7 @@ class User
     /**
      * @var string
      */
-    private $ggNumber;
+    private $aimNumber;
 
     /**
      * @var string
@@ -50,7 +50,7 @@ class User
     /**
      * @var string
      */
-    private $profession;
+    private $ocupation;
 
     /**
      * @var string
@@ -166,9 +166,9 @@ class User
     /**
      * @return string
      */
-    public function getGgNumber()
+    public function getAimNumber()
     {
-        return $this->ggNumber;
+        return $this->aimNumber;
     }
 
     /**
@@ -206,9 +206,9 @@ class User
     /**
      * @return string
      */
-    public function getProfession()
+    public function getOcupation()
     {
-        return $this->profession;
+        return $this->ocupation;
     }
 
     /**
@@ -377,11 +377,11 @@ class User
     }
 
     /**
-     * @param string $ggNumber
+     * @param string $aimNumber
      */
-    public function setGgNumber($ggNumber)
+    public function setAimNumber($aimNumber)
     {
-        $this->ggNumber = $ggNumber;
+        $this->aimNumber = $aimNumber;
     }
 
     /**
@@ -417,11 +417,11 @@ class User
     }
 
     /**
-     * @param string $profession
+     * @param string $ocupation
      */
-    public function setProfession($profession)
+    public function setOcupation($ocupation)
     {
-        $this->profession = $profession;
+        $this->ocupation = $ocupation;
     }
 
     /**
