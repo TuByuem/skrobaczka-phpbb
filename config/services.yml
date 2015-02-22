@@ -19,6 +19,7 @@ parameters:
     model_converter.class: TuByuem\Skrobaczka\Mapping\ModelConverter
     mapping.integer.class: TuByuem\Skrobaczka\Mapping\Integer
     mapping.boolean.class: TuByuem\Skrobaczka\Mapping\Boolean
+    user.class: TuByuem\Skrobaczka\Model\User
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -111,6 +112,7 @@ services:
         abstract: true
         calls:
             - [setPropertyAccessor, [@property_accessor]]
+            - [setObjectMapping, [%mapping%]]
         tags:
             - { name: model_converter }
     mapping.integer:
@@ -121,3 +123,8 @@ services:
         class: %mapping.boolean.class%
         tags:
             - { name: mapping, alias: boolean }
+    model_converter.user:
+        class: %model_converter.class%
+        parent: model_converter
+        arguments:
+            - %user.class%

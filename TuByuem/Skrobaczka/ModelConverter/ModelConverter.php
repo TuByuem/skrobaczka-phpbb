@@ -30,25 +30,25 @@ class ModelConverter
     private $mappings = [];
 
     /**
-     * @param PropertyAccessor $propertyAccessor
-     */
-    public function __construct(PropertyAccessor $propertyAccessor)
-    {
-        $this->propertyAccessor = $propertyAccessor;
-    }
-
-    /**
      * @param string $modelClassName
      */
-    public function setModelClassName($modelClassName)
+    public function __construct($modelClassName)
     {
         $this->modelClassName = $modelClassName;
     }
 
     /**
+     * @param PropertyAccessor $propertyAccessor
+     */
+    public function setPropertyAccessor(PropertyAccessor $propertyAccessor)
+    {
+        $this->propertyAccessor = $propertyAccessor;
+    }
+
+    /**
      * @param array $objectMapping
      */
-    public function setObjectMapping(array $objectMapping)
+    public function setObjectMapping($objectMapping)
     {
         $this->objectMapping = $objectMapping;
     }

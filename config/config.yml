@@ -1,7 +1,7 @@
 parameters:
     property_access.magic_call: false
     property_access.ignore_invalid_index: false
-    form_mapping:
+    mapping:
         TuByuem\Skrobaczka\Model\User:
             id:
                 field: id
