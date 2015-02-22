@@ -16,10 +16,11 @@ parameters:
     action.visitor.search_admin_user.class: TuByuem\Skrobaczka\Action\Visitor\SearchAdminUser
     action.find_admin_user_page.class: TuByuem\Skrobaczka\Action\FindAdminUserPage
     property_accessor.class: Symfony\Component\PropertyAccess\PropertyAccessor
-    model_converter.class: TuByuem\Skrobaczka\Mapping\ModelConverter
+    model_converter.class: TuByuem\Skrobaczka\ModelConverter\ModelConverter
     mapping.integer.class: TuByuem\Skrobaczka\Mapping\Integer
     mapping.boolean.class: TuByuem\Skrobaczka\Mapping\Boolean
     user.class: TuByuem\Skrobaczka\Model\User
+    scraper.form.class: TuByuem\Skrobaczka\Scraper\FormScraper
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -30,10 +31,10 @@ services:
         arguments:
             - @action.init
             - @action.find_admin_user_page
+            - @scraper.user
             - @action.admin_login
         tags:
-            -
-                name: console.command
+            - { name: console.command }
     client:
         class: %client.class%
     action.helper.submit_login_form:
@@ -128,3 +129,7 @@ services:
         parent: model_converter
         arguments:
             - %user.class%
+    scraper.user:
+        class: %scraper.form.class%
+        arguments:
+            - @model_converter.user

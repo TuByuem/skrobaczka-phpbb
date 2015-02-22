@@ -22,8 +22,8 @@ parameters:
                 field: website
             location:
                 field: location
-            ocupation:
-                field: ocupation
+            occupation:
+                field: occupation
             hobbies:
                 field: interests
             signature:
@@ -50,10 +50,10 @@ parameters:
                 field: allowbbcode
                 mapping: boolean
             htmlEnabled:
-                field: allowHtml
+                field: allowhtml
                 mapping: boolean
             emotesEnabled:
-                field: allowsmiles
+                field: allowsmilies
                 mapping: boolean
             boardLanguage:
                 field: language

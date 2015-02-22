@@ -45,8 +45,8 @@ class AddMappingPass implements CompilerPassInterface
             foreach ($tags as $tag) {
                 $this->validateTag($mappingId, $tag);
                 $converterDefinition->addMethodCall(
-                    'addObjectMapping',
-                    [$tag['alias'], $mappingReference]
+                    'addMapping',
+                    [$mappingReference, $tag['alias']]
                 );
             }
         }

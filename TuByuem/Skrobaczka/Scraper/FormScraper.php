@@ -1,19 +1,29 @@
 <?php
 
-namespace TuByuem\Skrobaczka\Scraper\Helper;
+namespace TuByuem\Skrobaczka\Scraper;
 
 use Symfony\Component\DomCrawler\Crawler;
+use TuByuem\Skrobaczka\Action\AbstractAction;
 
 /**
  * @author TuByuem <tubyuem@wp.pl>
  */
-class FormScraper
+class FormScraper extends SingleScraper
 {
-    public function scrapFormFields(Crawler $crawler)
+    public function scrap(AbstractAction $action)
+    {
+        $crawler = $action->getActualCrawler();
+        $formCrawler = $crawler->filter('form');
+
+        return $this->convert($this->scrapFormFields($formCrawler));
+    }
+
+    private function scrapFormFields(Crawler $crawler)
     {
         $textInputs = $crawler->filter('input, textarea, select');
         $textModels = $this->convertInputsToModels($textInputs);
-        var_dump($textModels);
+
+        return $textModels;
     }
 
     private function convertInputsToModels(Crawler $inputsCrawler)
@@ -43,6 +53,7 @@ class FormScraper
             return true;
         }
     }
+
     private function convertName(Crawler $inputCrawler)
     {
         return $inputCrawler->attr('name');

@@ -8,6 +8,11 @@ namespace TuByuem\Skrobaczka\Model;
 class User
 {
     /**
+     * @var int
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $username;
@@ -20,7 +25,7 @@ class User
     /**
      * @var string
      */
-    private $icq;
+    private $icqNumber;
 
     /**
      * @var string
@@ -50,7 +55,7 @@ class User
     /**
      * @var string
      */
-    private $ocupation;
+    private $occupation;
 
     /**
      * @var string
@@ -140,6 +145,14 @@ class User
     private $galleryEnabled;
 
     /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
     public function getUsername()
@@ -158,9 +171,9 @@ class User
     /**
      * @return string
      */
-    public function getIcq()
+    public function getIcqNumber()
     {
-        return $this->icq;
+        return $this->icqNumber;
     }
 
     /**
@@ -206,9 +219,9 @@ class User
     /**
      * @return string
      */
-    public function getOcupation()
+    public function getOccupation()
     {
-        return $this->ocupation;
+        return $this->occupation;
     }
 
     /**
@@ -353,6 +366,14 @@ class User
     }
 
     /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @param string $username
      */
     public function setUsername($username)
@@ -371,9 +392,9 @@ class User
     /**
      * @param string $icq
      */
-    public function setIcq($icq)
+    public function setIcqNumber($icq)
     {
-        $this->icq = $icq;
+        $this->icqNumber = $icq;
     }
 
     /**
@@ -417,11 +438,11 @@ class User
     }
 
     /**
-     * @param string $ocupation
+     * @param string $occupation
      */
-    public function setOcupation($ocupation)
+    public function setOccupation($occupation)
     {
-        $this->ocupation = $ocupation;
+        $this->occupation = $occupation;
     }
 
     /**
