@@ -8,6 +8,11 @@ namespace TuByuem\Skrobaczka\Model;
 class User
 {
     /**
+     * @var int
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $username;
@@ -20,12 +25,12 @@ class User
     /**
      * @var string
      */
-    private $icq;
+    private $icqNumber;
 
     /**
      * @var string
      */
-    private $ggNumber;
+    private $aimNumber;
 
     /**
      * @var string
@@ -50,7 +55,7 @@ class User
     /**
      * @var string
      */
-    private $profession;
+    private $occupation;
 
     /**
      * @var string
@@ -140,6 +145,14 @@ class User
     private $galleryEnabled;
 
     /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @return string
      */
     public function getUsername()
@@ -158,17 +171,17 @@ class User
     /**
      * @return string
      */
-    public function getIcq()
+    public function getIcqNumber()
     {
-        return $this->icq;
+        return $this->icqNumber;
     }
 
     /**
      * @return string
      */
-    public function getGgNumber()
+    public function getAimNumber()
     {
-        return $this->ggNumber;
+        return $this->aimNumber;
     }
 
     /**
@@ -206,9 +219,9 @@ class User
     /**
      * @return string
      */
-    public function getProfession()
+    public function getOccupation()
     {
-        return $this->profession;
+        return $this->occupation;
     }
 
     /**
@@ -353,6 +366,14 @@ class User
     }
 
     /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
      * @param string $username
      */
     public function setUsername($username)
@@ -371,17 +392,17 @@ class User
     /**
      * @param string $icq
      */
-    public function setIcq($icq)
+    public function setIcqNumber($icq)
     {
-        $this->icq = $icq;
+        $this->icqNumber = $icq;
     }
 
     /**
-     * @param string $ggNumber
+     * @param string $aimNumber
      */
-    public function setGgNumber($ggNumber)
+    public function setAimNumber($aimNumber)
     {
-        $this->ggNumber = $ggNumber;
+        $this->aimNumber = $aimNumber;
     }
 
     /**
@@ -417,11 +438,11 @@ class User
     }
 
     /**
-     * @param string $profession
+     * @param string $occupation
      */
-    public function setProfession($profession)
+    public function setOccupation($occupation)
     {
-        $this->profession = $profession;
+        $this->occupation = $occupation;
     }
 
     /**

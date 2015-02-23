@@ -12,6 +12,7 @@ interface ActionInterface
 {
     /**
      * @return Crawler
+     *
      * @throws ActionNotReadyException
      */
     public function getActualCrawler();

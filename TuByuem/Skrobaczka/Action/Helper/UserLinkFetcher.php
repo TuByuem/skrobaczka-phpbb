@@ -12,7 +12,8 @@ use Symfony\Component\DomCrawler\Link;
 class UserLinkFetcher
 {
     /**
-     * @param  Crawler $listPageCrawler
+     * @param Crawler $listPageCrawler
+     *
      * @return Link[]
      */
     public function fetchUserLinks(Crawler $listPageCrawler)
@@ -26,7 +27,8 @@ class UserLinkFetcher
     }
 
     /**
-     * @param  Crawler   $listPageCrawler
+     * @param Crawler $listPageCrawler
+     *
      * @return Crawler[]
      */
     public function fetchUserLinkCrawlers(Crawler $listPageCrawler)
@@ -40,7 +42,8 @@ class UserLinkFetcher
     }
 
     /**
-     * @param  Crawler $listPageCrawler
+     * @param Crawler $listPageCrawler
+     *
      * @return array
      */
     public function fetchUsernames(Crawler $listPageCrawler)

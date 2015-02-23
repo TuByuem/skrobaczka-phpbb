@@ -9,6 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use TuByuem\Skrobaczka\Action\AdminLogin;
 use TuByuem\Skrobaczka\Action\FindAdminUserPage;
 use TuByuem\Skrobaczka\Action\Init;
+use TuByuem\Skrobaczka\Scraper\FormScraper;
 
 /**
  * @author TuByuem <tubyuem@wp.pl>
@@ -26,19 +27,20 @@ class Scrap extends Command
     private $findAdminUserPageAction;
 
     /**
+     * @var FormScraper
+     */
+    private $userScraper;
+
+    /**
      * @var AdminLogin
      */
     private $adminLoginAction;
 
-    /**
-     * @param Init              $init
-     * @param FindAdminUserPage $findAdminUserPageAction
-     * @param AdminLogin        $adminLoginAction
-     */
-    public function __construct(Init $init, FindAdminUserPage $findAdminUserPageAction, AdminLogin $adminLoginAction)
+    public function __construct(Init $init, FindAdminUserPage $findAdminUserPageAction, FormScraper $userScraper, AdminLogin $adminLoginAction)
     {
         $this->init = $init;
         $this->findAdminUserPageAction = $findAdminUserPageAction;
+        $this->userScraper = $userScraper;
         $this->adminLoginAction = $adminLoginAction;
         parent::__construct();
     }
@@ -66,7 +68,7 @@ class Scrap extends Command
             $password
         );
         $this->adminLoginAction->login($username, $password);
-        $this->findAdminUserPageAction->find('TuByuem');
-        $output->writeln($this->findAdminUserPageAction->getActualCrawler()->html());
+        $this->findAdminUserPageAction->find('Dziwak');
+        var_dump($this->userScraper->scrap($this->findAdminUserPageAction));
     }
 }

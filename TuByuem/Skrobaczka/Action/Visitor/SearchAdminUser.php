@@ -55,7 +55,8 @@ class SearchAdminUser extends AbstractStaticVisitor
     }
 
     /**
-     * @param  Crawler $adminMenuCrawler
+     * @param Crawler $adminMenuCrawler
+     *
      * @return Link
      */
     private function getManageUsersLink(Crawler $adminMenuCrawler)
@@ -77,7 +78,8 @@ class SearchAdminUser extends AbstractStaticVisitor
     }
 
     /**
-     * @param  Crawler $linkCrawler
+     * @param Crawler $linkCrawler
+     *
      * @return string
      */
     private function getLastCategoryTitle(Crawler $linkCrawler)
