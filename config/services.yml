@@ -22,6 +22,7 @@ parameters:
     user.class: TuByuem\Skrobaczka\Model\User
     scraper.form.class: TuByuem\Skrobaczka\Scraper\FormScraper
     util.forum_visitor_factory.class: TuByuem\Skrobaczka\Util\ForumVisitorFactory
+    util.topic_visitor_factory.class: TuByuem\Skrobaczka\Util\TopicVisitorFactory
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -139,3 +140,7 @@ services:
         arguments:
             - @client
             - @action.visitor.mainpage
+    util.topic_visitor_factory:
+        class: %util.topic_visitor_factory.class%
+        arguments:
+            - @client

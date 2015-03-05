@@ -29,6 +29,11 @@ abstract class AbstractPagedVisitor extends AbstractAction
     private $firstPageCrawler;
 
     /**
+     * @var int
+     */
+    private $actualPageNumber;
+
+    /**
      * @var Client
      */
     private $client;
@@ -67,12 +72,21 @@ abstract class AbstractPagedVisitor extends AbstractAction
         } else {
             $this->visitPage($this->nextPageNumber);
         }
+        $this->actualPageNumber = $this->nextPageNumber;
         $this->nextPageNumber++;
     }
 
     public function rewind()
     {
         $this->nextPageNumber = 1;
+    }
+
+    /**
+     * @return int
+     */
+    public function getActualPageNumber()
+    {
+        return $this->actualPageNumber;
     }
 
     /**
@@ -87,6 +101,9 @@ abstract class AbstractPagedVisitor extends AbstractAction
     {
         $firstPageCrawler = $this->getFirstPageCrawler();
         $pageLinksCrawler = $firstPageCrawler->filter('td[align="right"] span.nav a');
+        if (count($pageLinksCrawler) === 0) {
+            return 1;
+        }
         $lastLinkCrawler = $pageLinksCrawler->eq(count($pageLinksCrawler) - 2);
 
         return (int) $lastLinkCrawler->text();

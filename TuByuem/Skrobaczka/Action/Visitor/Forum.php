@@ -40,6 +40,14 @@ class Forum extends AbstractPagedVisitor
     }
 
     /**
+     * @return string
+     */
+    public function getForumName()
+    {
+        return $this->forumName;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function getFirstPageLink()
