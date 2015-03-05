@@ -63,15 +63,19 @@ class SearchAdminUser extends AbstractStaticVisitor
     {
         $tdCrawler = $adminMenuCrawler->filter('td');
         $i = 0;
-        $spanCrawler = null;
-        while ($spanCrawler === null || $spanCrawler->count() == 0 || $spanCrawler->text() !== $this->options['user_section_caption']) {
-            $i++;
-            $spanCrawler = $tdCrawler->eq($i)->filter('span');
-        }
-        $linkCrawler = null;
-        while ($linkCrawler === null || $linkCrawler->count() == 0 || $linkCrawler->text() !== $this->options['manage_users_link_text']) {
-            $i++;
-            $linkCrawler = $tdCrawler->eq($i)->filter('a');
+        try {
+            $spanCrawler = null;
+            while ($spanCrawler === null || $spanCrawler->text() !== $this->options['user_section_caption']) {
+                $i++;
+                $spanCrawler = $tdCrawler->eq($i)->filter('span');
+            }
+            $linkCrawler = null;
+            while ($linkCrawler === null || $linkCrawler->text() !== $this->options['manage_users_link_text']) {
+                $i++;
+                $linkCrawler = $tdCrawler->eq($i)->filter('a');
+            }
+        } catch (InvalidArgumentException $e) {
+            throw new InvalidConfigurationException('Check your configuration for \'admin_menu.options\'.');
         }
 
         return $linkCrawler->link();
