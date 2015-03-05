@@ -21,6 +21,7 @@ parameters:
     mapping.boolean.class: TuByuem\Skrobaczka\Mapping\Boolean
     user.class: TuByuem\Skrobaczka\Model\User
     scraper.form.class: TuByuem\Skrobaczka\Scraper\FormScraper
+    util.forum_visitor_factory.class: TuByuem\Skrobaczka\Util\ForumVisitorFactory
 services:
     event_dispatcher:
         class: %event_dispatcher.class%
@@ -133,3 +134,8 @@ services:
         class: %scraper.form.class%
         arguments:
             - @model_converter.user
+    util.forum_visitor_factory:
+        class: %util.forum_visitor_factory.class%
+        arguments:
+            - @client
+            - @action.visitor.mainpage
