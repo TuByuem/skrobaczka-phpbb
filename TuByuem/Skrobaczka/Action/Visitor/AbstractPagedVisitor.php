@@ -86,8 +86,7 @@ abstract class AbstractPagedVisitor extends AbstractAction
     private function getLastPageNumber()
     {
         $firstPageCrawler = $this->getFirstPageCrawler();
-        $navCrawler = $firstPageCrawler->filter('span.nav')->last();
-        $pageLinksCrawler = $navCrawler->children();
+        $pageLinksCrawler = $firstPageCrawler->filter('td[align="right"] span.nav a');
         $lastLinkCrawler = $pageLinksCrawler->eq(count($pageLinksCrawler) - 2);
 
         return (int) $lastLinkCrawler->text();
