@@ -39,6 +39,14 @@ class Topic extends AbstractPagedVisitor
     }
 
     /**
+     * @return string
+     */
+    public function getTopicTitle()
+    {
+        return $this->topicTitle;
+    }
+
+    /**
      * @return Link
      *
      * @throws RuntimeException

@@ -12,3 +12,6 @@ parameters:
         cattitle_selector: .cattitle
     admin_user_panel.options:
         show_user_button_text: Pokaż użytkownika
+    topic.options:
+        id_from_edit: /.*mode=editpost&p=([\d]+)/
+        edit_button_title: Zmień/Usuń ten post
